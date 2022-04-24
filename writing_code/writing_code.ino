@@ -2,16 +2,18 @@
 
 AF_DCMotor base(1), motor2(2), motor3(3), gripper(4);
 
-int common = 95;
-int delay_speed = 2000;
+int common = 75;
+int delay_speed = 1000;
 int m1_speed = common, m2_speed = common, m3_speed = common, m4_speed = common;
 
 void vertical_line_down(){
+  motor2.run(FORWARD);
   motor3.run(FORWARD);
 }
 
 void vertical_line_up(){
-  motor3.run(BACKWARD);
+  motor2.run(BACKWARD);
+  motor3.run(FORWARD);
 }
 
 void right(){
@@ -20,6 +22,13 @@ void right(){
 
 void left(){
   base.run(BACKWARD);
+}
+
+void zigzag(){
+  motor2.run(FORWARD);
+  delay(delay_speed);
+  right();
+  left();
 }
 
 void square(){
@@ -35,9 +44,9 @@ void square(){
 
 void L(){
   vertical_line_down();
-  delay(delay_speed*1.5);
+  delay(delay_speed);
   right();
-  delay(delay_speed*1.5);
+  delay(delay_speed);
 }
 
 void setup()
@@ -47,20 +56,21 @@ void setup()
   motor3.setSpeed(m3_speed);  // LEFT MOTOR -> UP AND DOWN
   gripper.setSpeed(m4_speed); // Gripper
   gripper.run(BACKWARD);
-  delay(delay_speed*1.5);
+  delay(delay_speed);
 
-  square();
-
-  L();
-  
+  vertical_line_down();
+  vertical_line_up();
 
   
+  /*
   delay(delay_speed*0.5);
   base.run(RELEASE);
   gripper.run(RELEASE);
   motor2.run(RELEASE);
   motor3.run(RELEASE);
+  */
   
 }
 
-void loop(){}
+void loop(){
+  }
